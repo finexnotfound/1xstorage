@@ -16,7 +16,7 @@ import com.example.data.auth.AuthState
 import com.example.ui.MainViewModel
 import com.example.ui.screens.AuthScreen
 import com.example.ui.screens.HomeScreen
-import com.example.ui.theme.LiquidSpaceDark
+import com.example.ui.theme.PureBlack
 import com.example.ui.theme.Storage1xTheme
 
 class MainActivity : ComponentActivity() {
@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
       Storage1xTheme {
         Surface(
           modifier = Modifier.fillMaxSize(),
-          color = LiquidSpaceDark
+          color = PureBlack
         ) {
           Storage1xApp()
         }

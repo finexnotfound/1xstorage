@@ -3,7 +3,6 @@ package com.example.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -44,15 +43,14 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.data.model.FileCategory
 import com.example.data.model.StorageFile
-import com.example.ui.theme.GlassBorderShine
-import com.example.ui.theme.GlassBorderSubtle
-import com.example.ui.theme.GlassFillDeep
-import com.example.ui.theme.LiquidCyan
-import com.example.ui.theme.LiquidTeal
-import com.example.ui.theme.LiquidViolet
-import com.example.ui.theme.TextMuted
-import com.example.ui.theme.TextPrimary
-import com.example.ui.theme.TextSecondary
+import com.example.ui.theme.GlassBorderTop
+import com.example.ui.theme.IosGray1
+import com.example.ui.theme.PureWhite
+import com.example.ui.theme.White08
+import com.example.ui.theme.White12
+import com.example.ui.theme.White18
+import com.example.ui.theme.White30
+import com.example.ui.theme.White75
 import com.example.ui.theme.liquidGlass
 import java.io.File
 
@@ -70,8 +68,8 @@ fun FileItemCard(
       .fillMaxWidth()
       .liquidGlass(
         shape = RoundedCornerShape(20.dp),
-        backgroundColor = GlassFillDeep,
-        borderColor = GlassBorderSubtle
+        backgroundColor = Color(0x12FFFFFF),
+        borderColor = White18
       )
       .clickable { onClick() }
       .padding(14.dp)
@@ -81,13 +79,13 @@ fun FileItemCard(
       modifier = Modifier.fillMaxWidth(),
       verticalAlignment = Alignment.CenterVertically
     ) {
-      // Thumbnail or Category Icon
+      // Monochrome Thumbnail or Icon
       Box(
         modifier = Modifier
-          .size(54.dp)
+          .size(52.dp)
           .clip(RoundedCornerShape(14.dp))
-          .background(Color(0x2213233F))
-          .border(1.dp, GlassBorderShine, RoundedCornerShape(14.dp)),
+          .background(White08)
+          .border(1.dp, White18, RoundedCornerShape(14.dp)),
         contentAlignment = Alignment.Center
       ) {
         val hasLocalFile = file.localPath != null && File(file.localPath).exists()
@@ -109,26 +107,19 @@ fun FileItemCard(
             FileCategory.ARCHIVE -> Icons.Default.Archive
             else -> Icons.Default.InsertDriveFile
           }
-          val iconTint = when (file.category) {
-            FileCategory.IMAGE -> LiquidCyan
-            FileCategory.DOCUMENT -> LiquidIceBlueColor
-            FileCategory.MEDIA -> LiquidViolet
-            FileCategory.ARCHIVE -> LiquidTeal
-            else -> TextSecondary
-          }
 
           Icon(
             imageVector = icon,
             contentDescription = null,
-            tint = iconTint,
-            modifier = Modifier.size(28.dp)
+            tint = PureWhite,
+            modifier = Modifier.size(24.dp)
           )
         }
       }
 
       Spacer(modifier = Modifier.width(14.dp))
 
-      // File Info Column
+      // File Details
       Column(
         modifier = Modifier.weight(1f)
       ) {
@@ -137,7 +128,7 @@ fun FileItemCard(
           fontSize = 14.sp,
           fontWeight = FontWeight.Bold,
           fontStyle = FontStyle.Italic,
-          color = TextPrimary,
+          color = PureWhite,
           maxLines = 1,
           overflow = TextOverflow.Ellipsis
         )
@@ -150,22 +141,21 @@ fun FileItemCard(
           Text(
             text = file.formattedSize(),
             fontSize = 12.sp,
-            fontWeight = FontWeight.ExtraBold,
-            fontStyle = FontStyle.Italic,
-            color = LiquidCyan
+            fontWeight = FontWeight.SemiBold,
+            color = PureWhite
           )
 
           Text(
             text = " • ",
             fontSize = 12.sp,
-            color = TextMuted
+            color = IosGray1
           )
 
           Text(
             text = file.formattedDate(),
             fontSize = 11.sp,
             fontWeight = FontWeight.Normal,
-            color = TextSecondary,
+            color = IosGray1,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
           )
@@ -176,42 +166,39 @@ fun FileItemCard(
         Row(verticalAlignment = Alignment.CenterVertically) {
           Icon(
             imageVector = Icons.Default.CloudDone,
-            contentDescription = "Cloud synced",
-            tint = LiquidTeal,
+            contentDescription = "Cloud Synced",
+            tint = White75,
             modifier = Modifier.size(12.dp)
           )
           Spacer(modifier = Modifier.width(4.dp))
           Text(
-            text = "Synced on 1x Cloud",
+            text = "1x Cloud Synced",
             fontSize = 10.sp,
-            fontWeight = FontWeight.Bold,
-            fontStyle = FontStyle.Italic,
-            color = LiquidTeal
+            fontWeight = FontWeight.Medium,
+            color = White75
           )
         }
       }
 
       Spacer(modifier = Modifier.width(6.dp))
 
-      // Direct Share Button
+      // Clean Share Button (Monochrome)
       IconButton(
         onClick = onShare,
         modifier = Modifier
-          .size(42.dp)
+          .size(40.dp)
           .clip(CircleShape)
-          .background(Color(0x1800F2FE))
-          .border(1.dp, Color(0x3300F2FE), CircleShape)
+          .background(White08)
+          .border(1.dp, White18, CircleShape)
           .testTag("share_file_${file.id}")
       ) {
         Icon(
           imageVector = Icons.Default.Share,
           contentDescription = "Share File Link",
-          tint = LiquidCyan,
-          modifier = Modifier.size(18.dp)
+          tint = PureWhite,
+          modifier = Modifier.size(17.dp)
         )
       }
     }
   }
 }
-
-private val LiquidIceBlueColor = Color(0xFF4FACFE)

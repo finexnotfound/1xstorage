@@ -47,7 +47,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -63,18 +62,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.data.auth.AuthState
 import com.example.ui.MainViewModel
-import com.example.ui.theme.GlassBorderCyan
-import com.example.ui.theme.GlassBorderShine
-import com.example.ui.theme.GlassBorderSubtle
-import com.example.ui.theme.GlassFillDeep
-import com.example.ui.theme.LiquidCyan
-import com.example.ui.theme.LiquidIceBlue
-import com.example.ui.theme.LiquidSpaceDark
-import com.example.ui.theme.LiquidViolet
-import com.example.ui.theme.TextCyanGlow
-import com.example.ui.theme.TextMuted
-import com.example.ui.theme.TextPrimary
-import com.example.ui.theme.TextSecondary
+import com.example.ui.theme.GlassBorderTop
+import com.example.ui.theme.IosGray1
+import com.example.ui.theme.PureBlack
+import com.example.ui.theme.PureWhite
+import com.example.ui.theme.White04
+import com.example.ui.theme.White08
+import com.example.ui.theme.White12
+import com.example.ui.theme.White18
+import com.example.ui.theme.White30
+import com.example.ui.theme.White75
 import com.example.ui.theme.liquidBackgroundEffect
 import com.example.ui.theme.liquidGlass
 
@@ -109,28 +106,20 @@ fun AuthScreen(
       horizontalAlignment = Alignment.CenterHorizontally,
       verticalArrangement = Arrangement.Center
     ) {
-      // Branding Header
+      // Monochrome Minimal Cloud Icon
       Box(
         modifier = Modifier
-          .size(76.dp)
+          .size(72.dp)
           .clip(CircleShape)
-          .background(
-            brush = Brush.radialGradient(
-              listOf(Color(0x3300F2FE), Color(0x10B154F0))
-            )
-          )
-          .border(
-            width = 1.5.dp,
-            brush = Brush.linearGradient(listOf(LiquidCyan, LiquidViolet, Color.White)),
-            shape = CircleShape
-          ),
+          .background(White12)
+          .border(1.dp, White30, CircleShape),
         contentAlignment = Alignment.Center
       ) {
         Icon(
           imageVector = Icons.Default.Cloud,
-          contentDescription = "1x Storage Cloud",
-          tint = LiquidCyan,
-          modifier = Modifier.size(42.dp)
+          contentDescription = "1x Storage",
+          tint = PureWhite,
+          modifier = Modifier.size(38.dp)
         )
       }
 
@@ -138,11 +127,11 @@ fun AuthScreen(
 
       Text(
         text = "1X STORAGE",
-        fontSize = 32.sp,
-        fontWeight = FontWeight.Black,
+        fontSize = 30.sp,
+        fontWeight = FontWeight.Bold,
         fontStyle = FontStyle.Italic,
-        letterSpacing = 1.sp,
-        color = TextPrimary
+        letterSpacing = 0.5.sp,
+        color = PureWhite
       )
 
       Row(
@@ -153,37 +142,36 @@ fun AuthScreen(
         Text(
           text = "MADE BY ",
           fontSize = 12.sp,
-          fontWeight = FontWeight.Bold,
-          fontStyle = FontStyle.Italic,
-          color = TextSecondary,
-          letterSpacing = 2.sp
+          fontWeight = FontWeight.Normal,
+          color = IosGray1,
+          letterSpacing = 1.5.sp
         )
         Text(
           text = "FINEX",
-          fontSize = 13.sp,
-          fontWeight = FontWeight.Black,
+          fontSize = 12.sp,
+          fontWeight = FontWeight.Bold,
           fontStyle = FontStyle.Italic,
-          color = LiquidCyan,
-          letterSpacing = 2.sp
+          color = PureWhite,
+          letterSpacing = 1.5.sp
         )
       }
 
-      // 50 GB Free badge
+      // 50 GB Free Minimal Pill
       Box(
         modifier = Modifier
           .padding(top = 10.dp)
           .clip(RoundedCornerShape(50.dp))
-          .background(Color(0x2200F2FE))
-          .border(1.dp, Color(0x5500F2FE), RoundedCornerShape(50.dp))
+          .background(White08)
+          .border(1.dp, White18, RoundedCornerShape(50.dp))
           .padding(horizontal = 14.dp, vertical = 5.dp)
       ) {
         Text(
-          text = "✦ FREE 50 GB CLOUD STORAGE ✦",
+          text = "FREE 50 GB CLOUD STORAGE",
           fontSize = 11.sp,
-          fontWeight = FontWeight.ExtraBold,
+          fontWeight = FontWeight.Bold,
           fontStyle = FontStyle.Italic,
-          color = TextCyanGlow,
-          letterSpacing = 1.sp
+          color = PureWhite,
+          letterSpacing = 0.5.sp
         )
       }
 
@@ -194,63 +182,57 @@ fun AuthScreen(
         modifier = Modifier
           .fillMaxWidth()
           .liquidGlass(
-            shape = RoundedCornerShape(28.dp),
-            backgroundColor = GlassFillDeep,
-            borderColor = GlassBorderShine
+            shape = RoundedCornerShape(26.dp),
+            backgroundColor = Color(0x18FFFFFF),
+            borderColor = GlassBorderTop
           )
           .padding(22.dp)
       ) {
         Column(
           horizontalAlignment = Alignment.CenterHorizontally
         ) {
-          // Tab Switcher: Login / Create Account
+          // Tab Switcher: Login / Create Account (iOS Segmented Control)
           Row(
             modifier = Modifier
               .fillMaxWidth()
-              .clip(RoundedCornerShape(16.dp))
-              .background(Color(0x1AFFFFFF))
-              .border(1.dp, GlassBorderSubtle, RoundedCornerShape(16.dp))
-              .padding(4.dp)
+              .clip(RoundedCornerShape(14.dp))
+              .background(White08)
+              .border(1.dp, White18, RoundedCornerShape(14.dp))
+              .padding(3.dp)
           ) {
             Box(
               modifier = Modifier
                 .weight(1f)
-                .clip(RoundedCornerShape(12.dp))
-                .background(
-                  if (!isSignUp) Brush.linearGradient(listOf(LiquidCyan.copy(alpha = 0.35f), LiquidIceBlue.copy(alpha = 0.2f)))
-                  else Brush.linearGradient(listOf(Color.Transparent, Color.Transparent))
-                )
+                .clip(RoundedCornerShape(11.dp))
+                .background(if (!isSignUp) PureWhite else Color.Transparent)
                 .clickable { isSignUp = false }
-                .padding(vertical = 10.dp),
+                .padding(vertical = 9.dp),
               contentAlignment = Alignment.Center
             ) {
               Text(
                 text = "Log In",
                 fontWeight = FontWeight.Bold,
                 fontStyle = FontStyle.Italic,
-                fontSize = 14.sp,
-                color = if (!isSignUp) TextPrimary else TextSecondary
+                fontSize = 13.sp,
+                color = if (!isSignUp) PureBlack else White75
               )
             }
 
             Box(
               modifier = Modifier
                 .weight(1f)
-                .clip(RoundedCornerShape(12.dp))
-                .background(
-                  if (isSignUp) Brush.linearGradient(listOf(LiquidCyan.copy(alpha = 0.35f), LiquidIceBlue.copy(alpha = 0.2f)))
-                  else Brush.linearGradient(listOf(Color.Transparent, Color.Transparent))
-                )
+                .clip(RoundedCornerShape(11.dp))
+                .background(if (isSignUp) PureWhite else Color.Transparent)
                 .clickable { isSignUp = true }
-                .padding(vertical = 10.dp),
+                .padding(vertical = 9.dp),
               contentAlignment = Alignment.Center
             ) {
               Text(
                 text = "Create Account",
                 fontWeight = FontWeight.Bold,
                 fontStyle = FontStyle.Italic,
-                fontSize = 14.sp,
-                color = if (isSignUp) TextPrimary else TextSecondary
+                fontSize = 13.sp,
+                color = if (isSignUp) PureBlack else White75
               )
             }
           }
@@ -263,17 +245,16 @@ fun AuthScreen(
               modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 14.dp)
-                .clip(RoundedCornerShape(14.dp))
-                .background(Color(0x2BFF5376))
-                .border(1.dp, Color(0x66FF5376), RoundedCornerShape(14.dp))
+                .clip(RoundedCornerShape(12.dp))
+                .background(White12)
+                .border(1.dp, White30, RoundedCornerShape(12.dp))
                 .padding(12.dp)
             ) {
               Text(
                 text = authState.message,
-                color = Color(0xFFFF9EB2),
+                color = PureWhite,
                 fontSize = 12.sp,
-                fontWeight = FontWeight.Bold,
-                fontStyle = FontStyle.Italic,
+                fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
               )
@@ -289,28 +270,27 @@ fun AuthScreen(
                 label = {
                   Text(
                     text = "Full Name",
-                    fontWeight = FontWeight.Bold,
-                    fontStyle = FontStyle.Italic
+                    fontWeight = FontWeight.Medium
                   )
                 },
                 leadingIcon = {
                   Icon(
                     imageVector = Icons.Default.Person,
                     contentDescription = null,
-                    tint = LiquidCyan
+                    tint = PureWhite
                   )
                 },
                 singleLine = true,
-                shape = RoundedCornerShape(16.dp),
+                shape = RoundedCornerShape(14.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                  focusedBorderColor = LiquidCyan,
-                  unfocusedBorderColor = GlassBorderSubtle,
-                  focusedContainerColor = Color(0x18FFFFFF),
-                  unfocusedContainerColor = Color(0x0CFFFFFF),
-                  focusedTextColor = TextPrimary,
-                  unfocusedTextColor = TextPrimary,
-                  focusedLabelColor = LiquidCyan,
-                  unfocusedLabelColor = TextSecondary
+                  focusedBorderColor = PureWhite,
+                  unfocusedBorderColor = White18,
+                  focusedContainerColor = White08,
+                  unfocusedContainerColor = White04,
+                  focusedTextColor = PureWhite,
+                  unfocusedTextColor = PureWhite,
+                  focusedLabelColor = PureWhite,
+                  unfocusedLabelColor = IosGray1
                 ),
                 modifier = Modifier
                   .fillMaxWidth()
@@ -327,15 +307,14 @@ fun AuthScreen(
             label = {
               Text(
                 text = "Email Address",
-                fontWeight = FontWeight.Bold,
-                fontStyle = FontStyle.Italic
+                fontWeight = FontWeight.Medium
               )
             },
             leadingIcon = {
               Icon(
                 imageVector = Icons.Default.Email,
                 contentDescription = null,
-                tint = LiquidCyan
+                tint = PureWhite
               )
             },
             keyboardOptions = KeyboardOptions(
@@ -343,16 +322,16 @@ fun AuthScreen(
               imeAction = ImeAction.Next
             ),
             singleLine = true,
-            shape = RoundedCornerShape(16.dp),
+            shape = RoundedCornerShape(14.dp),
             colors = OutlinedTextFieldDefaults.colors(
-              focusedBorderColor = LiquidCyan,
-              unfocusedBorderColor = GlassBorderSubtle,
-              focusedContainerColor = Color(0x18FFFFFF),
-              unfocusedContainerColor = Color(0x0CFFFFFF),
-              focusedTextColor = TextPrimary,
-              unfocusedTextColor = TextPrimary,
-              focusedLabelColor = LiquidCyan,
-              unfocusedLabelColor = TextSecondary
+              focusedBorderColor = PureWhite,
+              unfocusedBorderColor = White18,
+              focusedContainerColor = White08,
+              unfocusedContainerColor = White04,
+              focusedTextColor = PureWhite,
+              unfocusedTextColor = PureWhite,
+              focusedLabelColor = PureWhite,
+              unfocusedLabelColor = IosGray1
             ),
             modifier = Modifier
               .fillMaxWidth()
@@ -368,15 +347,14 @@ fun AuthScreen(
             label = {
               Text(
                 text = "Password",
-                fontWeight = FontWeight.Bold,
-                fontStyle = FontStyle.Italic
+                fontWeight = FontWeight.Medium
               )
             },
             leadingIcon = {
               Icon(
                 imageVector = Icons.Default.Lock,
                 contentDescription = null,
-                tint = LiquidCyan
+                tint = PureWhite
               )
             },
             trailingIcon = {
@@ -384,7 +362,7 @@ fun AuthScreen(
                 Icon(
                   imageVector = if (isPasswordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility,
                   contentDescription = if (isPasswordVisible) "Hide password" else "Show password",
-                  tint = TextSecondary
+                  tint = IosGray1
                 )
               }
             },
@@ -402,16 +380,16 @@ fun AuthScreen(
               }
             }),
             singleLine = true,
-            shape = RoundedCornerShape(16.dp),
+            shape = RoundedCornerShape(14.dp),
             colors = OutlinedTextFieldDefaults.colors(
-              focusedBorderColor = LiquidCyan,
-              unfocusedBorderColor = GlassBorderSubtle,
-              focusedContainerColor = Color(0x18FFFFFF),
-              unfocusedContainerColor = Color(0x0CFFFFFF),
-              focusedTextColor = TextPrimary,
-              unfocusedTextColor = TextPrimary,
-              focusedLabelColor = LiquidCyan,
-              unfocusedLabelColor = TextSecondary
+              focusedBorderColor = PureWhite,
+              unfocusedBorderColor = White18,
+              focusedContainerColor = White08,
+              unfocusedContainerColor = White04,
+              focusedTextColor = PureWhite,
+              unfocusedTextColor = PureWhite,
+              focusedLabelColor = PureWhite,
+              unfocusedLabelColor = IosGray1
             ),
             modifier = Modifier
               .fillMaxWidth()
@@ -420,19 +398,14 @@ fun AuthScreen(
 
           Spacer(modifier = Modifier.height(20.dp))
 
-          // Primary Submit Button
+          // Primary Submit Button (Solid Pure White)
           val isLoading = authState is AuthState.Loading
           Box(
             modifier = Modifier
               .fillMaxWidth()
-              .height(52.dp)
-              .clip(RoundedCornerShape(16.dp))
-              .background(
-                brush = Brush.horizontalGradient(
-                  colors = listOf(LiquidCyan, LiquidIceBlue, LiquidViolet)
-                )
-              )
-              .border(1.dp, Color(0x80FFFFFF), RoundedCornerShape(16.dp))
+              .height(50.dp)
+              .clip(RoundedCornerShape(14.dp))
+              .background(PureWhite)
               .clickable(enabled = !isLoading) {
                 focusManager.clearFocus()
                 if (isSignUp) {
@@ -446,18 +419,18 @@ fun AuthScreen(
           ) {
             if (isLoading) {
               CircularProgressIndicator(
-                color = LiquidSpaceDark,
-                strokeWidth = 2.5.dp,
-                modifier = Modifier.size(24.dp)
+                color = PureBlack,
+                strokeWidth = 2.dp,
+                modifier = Modifier.size(20.dp)
               )
             } else {
               Text(
                 text = if (isSignUp) "CREATE 1X ACCOUNT" else "LOG IN TO 1X STORAGE",
-                fontWeight = FontWeight.Black,
+                fontWeight = FontWeight.Bold,
                 fontStyle = FontStyle.Italic,
-                fontSize = 15.sp,
+                fontSize = 14.sp,
                 letterSpacing = 0.5.sp,
-                color = LiquidSpaceDark
+                color = PureBlack
               )
             }
           }
@@ -471,31 +444,30 @@ fun AuthScreen(
           ) {
             HorizontalDivider(
               modifier = Modifier.weight(1f),
-              color = Color(0x26FFFFFF)
+              color = White08
             )
             Text(
               text = "  OR  ",
               fontSize = 11.sp,
-              fontWeight = FontWeight.Bold,
-              fontStyle = FontStyle.Italic,
-              color = TextMuted
+              fontWeight = FontWeight.Normal,
+              color = IosGray1
             )
             HorizontalDivider(
               modifier = Modifier.weight(1f),
-              color = Color(0x26FFFFFF)
+              color = White08
             )
           }
 
           Spacer(modifier = Modifier.height(18.dp))
 
-          // Continue with Google Button
+          // Continue with Google Button (Frosted Liquid Glass)
           Box(
             modifier = Modifier
               .fillMaxWidth()
-              .height(50.dp)
-              .clip(RoundedCornerShape(16.dp))
-              .background(Color(0x1FFFFFFF))
-              .border(1.2.dp, GlassBorderShine, RoundedCornerShape(16.dp))
+              .height(48.dp)
+              .clip(RoundedCornerShape(14.dp))
+              .background(White12)
+              .border(1.dp, White30, RoundedCornerShape(14.dp))
               .clickable(enabled = !isLoading) {
                 viewModel.signInWithGoogle(context)
               }
@@ -506,44 +478,43 @@ fun AuthScreen(
               verticalAlignment = Alignment.CenterVertically,
               horizontalArrangement = Arrangement.Center
             ) {
-              // Custom Google "G" Badge
               Box(
                 modifier = Modifier
-                  .size(26.dp)
+                  .size(24.dp)
                   .clip(CircleShape)
-                  .background(Color.White),
+                  .background(PureWhite),
                 contentAlignment = Alignment.Center
               ) {
                 Text(
                   text = "G",
-                  fontWeight = FontWeight.Black,
-                  fontSize = 16.sp,
-                  color = Color(0xFF4285F4)
+                  fontWeight = FontWeight.Bold,
+                  fontSize = 14.sp,
+                  color = PureBlack
                 )
               }
 
-              Spacer(modifier = Modifier.width(12.dp))
+              Spacer(modifier = Modifier.width(10.dp))
 
               Text(
                 text = "Continue with Google",
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.SemiBold,
                 fontStyle = FontStyle.Italic,
                 fontSize = 14.sp,
-                color = TextPrimary
+                color = PureWhite
               )
             }
           }
 
-          Spacer(modifier = Modifier.height(14.dp))
+          Spacer(modifier = Modifier.height(12.dp))
 
-          // Demo / Quick Access finex button
+          // Demo finex access button
           Box(
             modifier = Modifier
               .fillMaxWidth()
-              .height(44.dp)
-              .clip(RoundedCornerShape(14.dp))
-              .background(Color(0x1000F2FE))
-              .border(1.dp, Color(0x3300F2FE), RoundedCornerShape(14.dp))
+              .height(42.dp)
+              .clip(RoundedCornerShape(12.dp))
+              .background(White04)
+              .border(1.dp, White18, RoundedCornerShape(12.dp))
               .clickable {
                 viewModel.continueAsDemo()
               }
@@ -551,11 +522,11 @@ fun AuthScreen(
             contentAlignment = Alignment.Center
           ) {
             Text(
-              text = "⚡ Instant Access as finex (50 GB Cloud)",
-              fontWeight = FontWeight.Bold,
+              text = "Instant Access as finex (50 GB Cloud)",
+              fontWeight = FontWeight.Medium,
               fontStyle = FontStyle.Italic,
               fontSize = 12.sp,
-              color = LiquidCyan
+              color = White75
             )
           }
         }
@@ -564,12 +535,11 @@ fun AuthScreen(
       Spacer(modifier = Modifier.height(24.dp))
 
       Text(
-        text = "Free 50 GB Cloud Storage provided by finex.\nEncrypted & Synced to Cloud.",
+        text = "Free 50 GB Cloud Storage by finex.\nEncrypted & Synced to 1x Cloud.",
         fontSize = 11.sp,
-        fontWeight = FontWeight.Medium,
-        fontStyle = FontStyle.Italic,
+        fontWeight = FontWeight.Normal,
         textAlign = TextAlign.Center,
-        color = TextMuted,
+        color = IosGray1,
         lineHeight = 16.sp
       )
     }

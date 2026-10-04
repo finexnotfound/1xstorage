@@ -40,7 +40,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -55,17 +54,16 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.data.model.FileCategory
 import com.example.data.model.StorageFile
-import com.example.ui.theme.GlassBorderCyan
-import com.example.ui.theme.GlassBorderShine
-import com.example.ui.theme.GlassBorderSubtle
-import com.example.ui.theme.GlassFillDeep
-import com.example.ui.theme.LiquidCyan
-import com.example.ui.theme.LiquidIceBlue
-import com.example.ui.theme.LiquidSpaceDark
-import com.example.ui.theme.LiquidViolet
-import com.example.ui.theme.TextMuted
-import com.example.ui.theme.TextPrimary
-import com.example.ui.theme.TextSecondary
+import com.example.ui.theme.GlassBorderTop
+import com.example.ui.theme.IosGray1
+import com.example.ui.theme.PureBlack
+import com.example.ui.theme.PureWhite
+import com.example.ui.theme.White04
+import com.example.ui.theme.White08
+import com.example.ui.theme.White12
+import com.example.ui.theme.White18
+import com.example.ui.theme.White30
+import com.example.ui.theme.White75
 import com.example.ui.theme.liquidGlass
 import java.io.File
 
@@ -91,8 +89,8 @@ fun FilePreviewDialog(
         .fillMaxWidth()
         .liquidGlass(
           shape = RoundedCornerShape(28.dp),
-          backgroundColor = GlassFillDeep,
-          borderColor = GlassBorderCyan
+          backgroundColor = Color(0x18FFFFFF),
+          borderColor = GlassBorderTop
         )
         .padding(20.dp)
     ) {
@@ -102,7 +100,7 @@ fun FilePreviewDialog(
           .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
       ) {
-        // Header with Close
+        // Header
         Row(
           modifier = Modifier.fillMaxWidth(),
           horizontalArrangement = Arrangement.SpaceBetween,
@@ -111,37 +109,37 @@ fun FilePreviewDialog(
           Row(verticalAlignment = Alignment.CenterVertically) {
             Box(
               modifier = Modifier
-                .size(28.dp)
+                .size(26.dp)
                 .clip(CircleShape)
-                .background(Color(0x2200F2FE)),
+                .background(White12),
               contentAlignment = Alignment.Center
             ) {
               Icon(
                 imageVector = Icons.Default.Cloud,
                 contentDescription = null,
-                tint = LiquidCyan,
-                modifier = Modifier.size(16.dp)
+                tint = PureWhite,
+                modifier = Modifier.size(15.dp)
               )
             }
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-              text = "FILE PREVIEW",
+              text = "PREVIEW",
               fontSize = 12.sp,
-              fontWeight = FontWeight.Black,
+              fontWeight = FontWeight.Bold,
               fontStyle = FontStyle.Italic,
-              letterSpacing = 1.sp,
-              color = LiquidCyan
+              letterSpacing = 0.5.sp,
+              color = PureWhite
             )
           }
 
           IconButton(
             onClick = onDismiss,
-            modifier = Modifier.size(36.dp)
+            modifier = Modifier.size(32.dp)
           ) {
             Icon(
               imageVector = Icons.Default.Close,
-              contentDescription = "Close preview",
-              tint = TextSecondary
+              contentDescription = "Close",
+              tint = IosGray1
             )
           }
         }
@@ -153,9 +151,9 @@ fun FilePreviewDialog(
           modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = 160.dp, max = 240.dp)
-            .clip(RoundedCornerShape(20.dp))
-            .background(Color(0x250E172C))
-            .border(1.dp, GlassBorderShine, RoundedCornerShape(20.dp)),
+            .clip(RoundedCornerShape(18.dp))
+            .background(Color(0x22000000))
+            .border(1.dp, White18, RoundedCornerShape(18.dp)),
           contentAlignment = Alignment.Center
         ) {
           if (file.category == FileCategory.IMAGE && hasLocalFile) {
@@ -164,11 +162,11 @@ fun FilePreviewDialog(
                 .data(File(file.localPath!!))
                 .crossfade(true)
                 .build(),
-              contentDescription = "Full Image Preview",
+              contentDescription = "Image Preview",
               contentScale = ContentScale.Fit,
               modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(6.dp)
             )
           } else {
             Column(
@@ -178,32 +176,32 @@ fun FilePreviewDialog(
             ) {
               Box(
                 modifier = Modifier
-                  .size(64.dp)
+                  .size(56.dp)
                   .clip(CircleShape)
-                  .background(Color(0x1F00F2FE))
-                  .border(1.dp, Color(0x4400F2FE), CircleShape),
+                  .background(White12)
+                  .border(1.dp, White30, CircleShape),
                 contentAlignment = Alignment.Center
               ) {
                 Icon(
                   imageVector = if (file.category == FileCategory.IMAGE) Icons.Default.Image else Icons.Default.Description,
                   contentDescription = null,
-                  tint = LiquidCyan,
-                  modifier = Modifier.size(32.dp)
+                  tint = PureWhite,
+                  modifier = Modifier.size(28.dp)
                 )
               }
               Spacer(modifier = Modifier.height(10.dp))
               Text(
                 text = file.category.label.uppercase(),
                 fontSize = 11.sp,
-                fontWeight = FontWeight.ExtraBold,
+                fontWeight = FontWeight.Bold,
                 fontStyle = FontStyle.Italic,
-                letterSpacing = 1.sp,
-                color = LiquidIceBlue
+                letterSpacing = 0.5.sp,
+                color = PureWhite
               )
               Text(
                 text = file.mimeType,
                 fontSize = 10.sp,
-                color = TextMuted
+                color = IosGray1
               )
             }
           }
@@ -211,19 +209,19 @@ fun FilePreviewDialog(
 
         Spacer(modifier = Modifier.height(14.dp))
 
-        // File Title & Details
+        // Title and size
         Text(
           text = file.name,
           fontSize = 16.sp,
-          fontWeight = FontWeight.Black,
+          fontWeight = FontWeight.Bold,
           fontStyle = FontStyle.Italic,
           textAlign = TextAlign.Center,
-          color = TextPrimary,
+          color = PureWhite,
           maxLines = 2,
           overflow = TextOverflow.Ellipsis
         )
 
-        Spacer(modifier = Modifier.height(6.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
         Row(
           horizontalArrangement = Arrangement.Center,
@@ -232,68 +230,64 @@ fun FilePreviewDialog(
           Text(
             text = file.formattedSize(),
             fontSize = 13.sp,
-            fontWeight = FontWeight.Bold,
-            fontStyle = FontStyle.Italic,
-            color = LiquidCyan
+            fontWeight = FontWeight.SemiBold,
+            color = PureWhite
           )
-          Text(text = " • ", color = TextMuted)
+          Text(text = " • ", color = IosGray1)
           Text(
             text = file.formattedDate(),
             fontSize = 12.sp,
-            color = TextSecondary
+            color = IosGray1
           )
         }
 
         Spacer(modifier = Modifier.height(14.dp))
 
-        // Cloud Link Info Card
+        // Cloud Link Info Card (Monochrome)
         Box(
           modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(14.dp))
-            .background(Color(0x1400F2FE))
-            .border(1.dp, Color(0x3300F2FE), RoundedCornerShape(14.dp))
+            .clip(RoundedCornerShape(12.dp))
+            .background(White08)
+            .border(1.dp, White18, RoundedCornerShape(12.dp))
             .padding(10.dp)
         ) {
           Column {
             Text(
-              text = "✦ 1X CLOUD SHARING LINK",
+              text = "1X CLOUD SHARING LINK",
               fontSize = 10.sp,
-              fontWeight = FontWeight.ExtraBold,
+              fontWeight = FontWeight.Bold,
               fontStyle = FontStyle.Italic,
-              color = LiquidCyan
+              letterSpacing = 0.5.sp,
+              color = PureWhite
             )
             Spacer(modifier = Modifier.height(2.dp))
             Text(
               text = file.cloudUrl,
               fontSize = 10.sp,
-              color = TextSecondary,
+              color = White75,
               maxLines = 1,
               overflow = TextOverflow.Ellipsis
             )
           }
         }
 
-        Spacer(modifier = Modifier.height(18.dp))
-        HorizontalDivider(color = Color(0x22FFFFFF))
-        Spacer(modifier = Modifier.height(18.dp))
+        Spacer(modifier = Modifier.height(16.dp))
+        HorizontalDivider(color = White08)
+        Spacer(modifier = Modifier.height(16.dp))
 
-        // Action Buttons Row: Share & Cloud Browser View
+        // Action Buttons Row (Solid White & Frosted Glass)
         Row(
           modifier = Modifier.fillMaxWidth(),
           horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-          // Share Button
+          // Share Button (Solid White)
           Box(
             modifier = Modifier
               .weight(1f)
-              .height(48.dp)
+              .height(46.dp)
               .clip(RoundedCornerShape(14.dp))
-              .background(
-                brush = Brush.horizontalGradient(
-                  listOf(LiquidCyan, LiquidIceBlue)
-                )
-              )
+              .background(PureWhite)
               .clickable { onShare(file) }
               .testTag("dialog_share_button"),
             contentAlignment = Alignment.Center
@@ -302,28 +296,28 @@ fun FilePreviewDialog(
               Icon(
                 imageVector = Icons.Default.Share,
                 contentDescription = null,
-                tint = LiquidSpaceDark,
+                tint = PureBlack,
                 modifier = Modifier.size(16.dp)
               )
               Spacer(modifier = Modifier.width(6.dp))
               Text(
                 text = "SHARE LINK",
-                fontWeight = FontWeight.Black,
+                fontWeight = FontWeight.Bold,
                 fontStyle = FontStyle.Italic,
                 fontSize = 12.sp,
-                color = LiquidSpaceDark
+                color = PureBlack
               )
             }
           }
 
-          // Browser View on Cloud
+          // Browser View on Cloud (Frosted Glass)
           Box(
             modifier = Modifier
               .weight(1.2f)
-              .height(48.dp)
+              .height(46.dp)
               .clip(RoundedCornerShape(14.dp))
-              .background(Color(0x22FFFFFF))
-              .border(1.2.dp, GlassBorderShine, RoundedCornerShape(14.dp))
+              .background(White12)
+              .border(1.dp, White30, RoundedCornerShape(14.dp))
               .clickable { onOpenBrowserCloudView(file) }
               .testTag("dialog_browser_view_button"),
             contentAlignment = Alignment.Center
@@ -332,7 +326,7 @@ fun FilePreviewDialog(
               Icon(
                 imageVector = Icons.Default.Language,
                 contentDescription = null,
-                tint = LiquidCyan,
+                tint = PureWhite,
                 modifier = Modifier.size(16.dp)
               )
               Spacer(modifier = Modifier.width(6.dp))
@@ -341,7 +335,7 @@ fun FilePreviewDialog(
                 fontWeight = FontWeight.Bold,
                 fontStyle = FontStyle.Italic,
                 fontSize = 12.sp,
-                color = TextPrimary
+                color = PureWhite
               )
             }
           }
@@ -349,7 +343,7 @@ fun FilePreviewDialog(
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        // Open in App (if local) or Delete
+        // Open in App or Delete (Monochrome)
         Row(
           modifier = Modifier.fillMaxWidth(),
           horizontalArrangement = Arrangement.spacedBy(10.dp)
@@ -358,10 +352,10 @@ fun FilePreviewDialog(
             Box(
               modifier = Modifier
                 .weight(1f)
-                .height(40.dp)
+                .height(38.dp)
                 .clip(RoundedCornerShape(12.dp))
-                .background(Color(0x18FFFFFF))
-                .border(1.dp, GlassBorderSubtle, RoundedCornerShape(12.dp))
+                .background(White08)
+                .border(1.dp, White18, RoundedCornerShape(12.dp))
                 .clickable {
                   try {
                     val intent = Intent(Intent.ACTION_VIEW).apply {
@@ -377,29 +371,28 @@ fun FilePreviewDialog(
                 Icon(
                   imageVector = Icons.Default.OpenInNew,
                   contentDescription = null,
-                  tint = TextSecondary,
-                  modifier = Modifier.size(14.dp)
+                  tint = PureWhite,
+                  modifier = Modifier.size(13.dp)
                 )
                 Spacer(modifier = Modifier.width(6.dp))
                 Text(
                   text = "Open on Device",
                   fontSize = 11.sp,
-                  fontWeight = FontWeight.Bold,
-                  fontStyle = FontStyle.Italic,
-                  color = TextSecondary
+                  fontWeight = FontWeight.Medium,
+                  color = PureWhite
                 )
               }
             }
           }
 
-          // Delete Button
+          // Delete Button (Monochrome subtle outline)
           Box(
             modifier = Modifier
               .weight(1f)
-              .height(40.dp)
+              .height(38.dp)
               .clip(RoundedCornerShape(12.dp))
-              .background(Color(0x22FF5376))
-              .border(1.dp, Color(0x44FF5376), RoundedCornerShape(12.dp))
+              .background(White04)
+              .border(1.dp, White18, RoundedCornerShape(12.dp))
               .clickable { onDelete(file) }
               .testTag("dialog_delete_button"),
             contentAlignment = Alignment.Center
@@ -408,16 +401,15 @@ fun FilePreviewDialog(
               Icon(
                 imageVector = Icons.Default.Delete,
                 contentDescription = null,
-                tint = Color(0xFFFF859E),
-                modifier = Modifier.size(14.dp)
+                tint = IosGray1,
+                modifier = Modifier.size(13.dp)
               )
               Spacer(modifier = Modifier.width(6.dp))
               Text(
                 text = "Delete File",
                 fontSize = 11.sp,
-                fontWeight = FontWeight.Bold,
-                fontStyle = FontStyle.Italic,
-                color = Color(0xFFFF859E)
+                fontWeight = FontWeight.Medium,
+                color = IosGray1
               )
             }
           }

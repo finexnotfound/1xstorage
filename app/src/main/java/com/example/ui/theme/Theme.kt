@@ -5,25 +5,25 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-private val LiquidGlassColorScheme = darkColorScheme(
-  primary = LiquidCyan,
-  onPrimary = Color(0xFF031624),
-  primaryContainer = Color(0xFF072C48),
-  onPrimaryContainer = Color(0xFFBCE7FF),
-  secondary = LiquidIceBlue,
-  onSecondary = Color(0xFF002952),
-  secondaryContainer = Color(0xFF133660),
-  onSecondaryContainer = Color(0xFFD4E6FF),
-  tertiary = LiquidViolet,
-  onTertiary = Color(0xFF2C004F),
-  background = LiquidSpaceDark,
-  onBackground = TextPrimary,
-  surface = LiquidSpaceSurface,
-  onSurface = TextPrimary,
-  surfaceVariant = Color(0xFF121B30),
-  onSurfaceVariant = TextSecondary,
-  outline = GlassBorderSubtle,
-  outlineVariant = Color(0x334FACFE)
+private val MonochromeLiquidColorScheme = darkColorScheme(
+  primary = PureWhite,
+  onPrimary = PureBlack,
+  primaryContainer = White18,
+  onPrimaryContainer = PureWhite,
+  secondary = White75,
+  onSecondary = PureBlack,
+  secondaryContainer = White12,
+  onSecondaryContainer = PureWhite,
+  tertiary = IosGray1,
+  onTertiary = PureBlack,
+  background = PureBlack,
+  onBackground = PureWhite,
+  surface = BlackDeep,
+  onSurface = PureWhite,
+  surfaceVariant = BlackSurface,
+  onSurfaceVariant = White75,
+  outline = White18,
+  outlineVariant = White08
 )
 
 @Composable
@@ -31,7 +31,7 @@ fun Storage1xTheme(
   content: @Composable () -> Unit
 ) {
   MaterialTheme(
-    colorScheme = LiquidGlassColorScheme,
+    colorScheme = MonochromeLiquidColorScheme,
     typography = Typography,
     content = content
   )

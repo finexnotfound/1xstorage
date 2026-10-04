@@ -36,17 +36,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ui.StorageStats
-import com.example.ui.theme.GlassBorderCyan
-import com.example.ui.theme.GlassBorderShine
-import com.example.ui.theme.GlassFillDeep
-import com.example.ui.theme.LiquidCyan
-import com.example.ui.theme.LiquidIceBlue
-import com.example.ui.theme.LiquidTeal
-import com.example.ui.theme.LiquidViolet
-import com.example.ui.theme.TextCyanGlow
-import com.example.ui.theme.TextMuted
-import com.example.ui.theme.TextPrimary
-import com.example.ui.theme.TextSecondary
+import com.example.ui.theme.GlassBorderSide
+import com.example.ui.theme.GlassBorderTop
+import com.example.ui.theme.IosGray1
+import com.example.ui.theme.PureWhite
+import com.example.ui.theme.White04
+import com.example.ui.theme.White08
+import com.example.ui.theme.White12
+import com.example.ui.theme.White18
+import com.example.ui.theme.White30
+import com.example.ui.theme.White50
+import com.example.ui.theme.White75
 import com.example.ui.theme.liquidGlass
 
 @Composable
@@ -56,7 +56,7 @@ fun StorageHeroCard(
 ) {
   val animatedProgress by animateFloatAsState(
     targetValue = stats.percentageUsed.coerceIn(0.01f, 1f),
-    animationSpec = tween(durationMillis = 1200, easing = FastOutSlowInEasing),
+    animationSpec = tween(durationMillis = 1000, easing = FastOutSlowInEasing),
     label = "storage_progress"
   )
 
@@ -65,10 +65,10 @@ fun StorageHeroCard(
       .fillMaxWidth()
       .liquidGlass(
         shape = RoundedCornerShape(26.dp),
-        backgroundColor = GlassFillDeep,
-        borderColor = GlassBorderCyan
+        backgroundColor = Color(0x15FFFFFF),
+        borderColor = GlassBorderTop
       )
-      .padding(20.dp)
+      .padding(22.dp)
   ) {
     Column {
       // Top Row: 1x Storage Badge & Free 50GB Pill
@@ -82,15 +82,15 @@ fun StorageHeroCard(
             modifier = Modifier
               .size(34.dp)
               .clip(CircleShape)
-              .background(Color(0x2A00F2FE))
-              .border(1.dp, Color(0x6600F2FE), CircleShape),
+              .background(White12)
+              .border(1.dp, White30, CircleShape),
             contentAlignment = Alignment.Center
           ) {
             Icon(
               imageVector = Icons.Default.CloudDone,
               contentDescription = "Cloud Synced",
-              tint = LiquidCyan,
-              modifier = Modifier.size(20.dp)
+              tint = PureWhite,
+              modifier = Modifier.size(18.dp)
             )
           }
 
@@ -100,17 +100,16 @@ fun StorageHeroCard(
             Text(
               text = "FREE CLOUD STORAGE",
               fontSize = 11.sp,
-              fontWeight = FontWeight.Black,
+              fontWeight = FontWeight.Bold,
               fontStyle = FontStyle.Italic,
-              letterSpacing = 1.sp,
-              color = LiquidCyan
+              letterSpacing = 0.5.sp,
+              color = PureWhite
             )
             Text(
-              text = "Powered by finex Cloud Engine",
-              fontSize = 10.sp,
-              fontWeight = FontWeight.Medium,
-              fontStyle = FontStyle.Italic,
-              color = TextSecondary
+              text = "Engineered by finex",
+              fontSize = 11.sp,
+              fontWeight = FontWeight.Normal,
+              color = IosGray1
             )
           }
         }
@@ -118,27 +117,23 @@ fun StorageHeroCard(
         Box(
           modifier = Modifier
             .clip(RoundedCornerShape(20.dp))
-            .background(
-              brush = Brush.linearGradient(
-                listOf(LiquidCyan.copy(alpha = 0.25f), LiquidViolet.copy(alpha = 0.25f))
-              )
-            )
-            .border(1.dp, GlassBorderShine, RoundedCornerShape(20.dp))
-            .padding(horizontal = 10.dp, vertical = 4.dp)
+            .background(White12)
+            .border(1.dp, White30, RoundedCornerShape(20.dp))
+            .padding(horizontal = 12.dp, vertical = 5.dp)
         ) {
           Text(
             text = "50 GB FREE",
             fontSize = 11.sp,
-            fontWeight = FontWeight.ExtraBold,
+            fontWeight = FontWeight.Bold,
             fontStyle = FontStyle.Italic,
-            color = TextCyanGlow
+            color = PureWhite
           )
         }
       }
 
-      Spacer(modifier = Modifier.height(18.dp))
+      Spacer(modifier = Modifier.height(20.dp))
 
-      // Numbers & Status
+      // Storage metrics (Black & White)
       Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -147,17 +142,17 @@ fun StorageHeroCard(
         Column {
           Text(
             text = stats.usedFormatted,
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Black,
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Bold,
             fontStyle = FontStyle.Italic,
-            color = TextPrimary
+            letterSpacing = (-0.5).sp,
+            color = PureWhite
           )
           Text(
             text = "used of ${stats.totalFormatted}",
             fontSize = 13.sp,
-            fontWeight = FontWeight.Bold,
-            fontStyle = FontStyle.Italic,
-            color = TextSecondary
+            fontWeight = FontWeight.Normal,
+            color = White75
           )
         }
 
@@ -165,30 +160,29 @@ fun StorageHeroCard(
           Text(
             text = stats.freeFormatted,
             fontSize = 18.sp,
-            fontWeight = FontWeight.ExtraBold,
-            fontStyle = FontStyle.Italic,
-            color = LiquidTeal
-          )
-          Text(
-            text = "remaining free space",
-            fontSize = 11.sp,
             fontWeight = FontWeight.Bold,
             fontStyle = FontStyle.Italic,
-            color = TextMuted
+            color = PureWhite
+          )
+          Text(
+            text = "available storage",
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Normal,
+            color = IosGray1
           )
         }
       }
 
-      Spacer(modifier = Modifier.height(14.dp))
+      Spacer(modifier = Modifier.height(16.dp))
 
-      // Liquid Glass Progress Bar
+      // Monochromatic Liquid Capsule Progress Bar
       Box(
         modifier = Modifier
           .fillMaxWidth()
-          .height(14.dp)
+          .height(10.dp)
           .clip(RoundedCornerShape(50.dp))
-          .background(Color(0x240A1326))
-          .border(1.dp, Color(0x33FFFFFF), RoundedCornerShape(50.dp))
+          .background(White08)
+          .border(1.dp, White18, RoundedCornerShape(50.dp))
       ) {
         Box(
           modifier = Modifier
@@ -198,18 +192,17 @@ fun StorageHeroCard(
             .background(
               brush = Brush.horizontalGradient(
                 colors = listOf(
-                  LiquidCyan,
-                  LiquidIceBlue,
-                  LiquidViolet
+                  PureWhite,
+                  Color(0xDDFFFFFF)
                 )
               )
             )
         )
       }
 
-      Spacer(modifier = Modifier.height(12.dp))
+      Spacer(modifier = Modifier.height(16.dp))
 
-      // Specs footer
+      // Minimal Specs footer
       Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -219,16 +212,15 @@ fun StorageHeroCard(
           Icon(
             imageVector = Icons.Default.Security,
             contentDescription = null,
-            tint = TextMuted,
+            tint = IosGray1,
             modifier = Modifier.size(13.dp)
           )
-          Spacer(modifier = Modifier.width(4.dp))
+          Spacer(modifier = Modifier.width(5.dp))
           Text(
-            text = "End-to-End Cloud Encrypted",
-            fontSize = 10.sp,
-            fontWeight = FontWeight.Bold,
-            fontStyle = FontStyle.Italic,
-            color = TextMuted
+            text = "End-to-End Encrypted",
+            fontSize = 11.sp,
+            fontWeight = FontWeight.Normal,
+            color = IosGray1
           )
         }
 
@@ -236,16 +228,15 @@ fun StorageHeroCard(
           Icon(
             imageVector = Icons.Default.Speed,
             contentDescription = null,
-            tint = TextMuted,
+            tint = IosGray1,
             modifier = Modifier.size(13.dp)
           )
-          Spacer(modifier = Modifier.width(4.dp))
+          Spacer(modifier = Modifier.width(5.dp))
           Text(
-            text = "1x High-Speed Uplink",
-            fontSize = 10.sp,
-            fontWeight = FontWeight.Bold,
-            fontStyle = FontStyle.Italic,
-            color = TextMuted
+            text = "1x Cloud Uplink",
+            fontSize = 11.sp,
+            fontWeight = FontWeight.Normal,
+            color = IosGray1
           )
         }
       }

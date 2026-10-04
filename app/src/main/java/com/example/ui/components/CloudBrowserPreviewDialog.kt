@@ -32,7 +32,6 @@ import androidx.compose.material.icons.filled.OpenInBrowser
 import androidx.compose.material.icons.filled.Public
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -40,7 +39,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -55,19 +53,17 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.data.model.FileCategory
 import com.example.data.model.StorageFile
-import com.example.ui.theme.GlassBorderCyan
-import com.example.ui.theme.GlassBorderShine
-import com.example.ui.theme.GlassBorderSubtle
-import com.example.ui.theme.GlassFillDeep
-import com.example.ui.theme.LiquidCyan
-import com.example.ui.theme.LiquidIceBlue
-import com.example.ui.theme.LiquidSpaceDark
-import com.example.ui.theme.LiquidTeal
-import com.example.ui.theme.LiquidViolet
-import com.example.ui.theme.TextCyanGlow
-import com.example.ui.theme.TextMuted
-import com.example.ui.theme.TextPrimary
-import com.example.ui.theme.TextSecondary
+import com.example.ui.theme.GlassBorderTop
+import com.example.ui.theme.IosGray1
+import com.example.ui.theme.IosGray3
+import com.example.ui.theme.PureBlack
+import com.example.ui.theme.PureWhite
+import com.example.ui.theme.White04
+import com.example.ui.theme.White08
+import com.example.ui.theme.White12
+import com.example.ui.theme.White18
+import com.example.ui.theme.White30
+import com.example.ui.theme.White75
 import com.example.ui.theme.liquidGlass
 import java.io.File
 
@@ -83,15 +79,15 @@ fun CloudBrowserPreviewDialog(
 
   BasicAlertDialog(
     onDismissRequest = onDismiss,
-    modifier = modifier.padding(12.dp)
+    modifier = modifier.padding(14.dp)
   ) {
     Box(
       modifier = Modifier
         .fillMaxWidth()
         .liquidGlass(
           shape = RoundedCornerShape(26.dp),
-          backgroundColor = GlassFillDeep,
-          borderColor = GlassBorderCyan
+          backgroundColor = Color(0x18FFFFFF),
+          borderColor = GlassBorderTop
         )
         .padding(18.dp)
     ) {
@@ -100,7 +96,7 @@ fun CloudBrowserPreviewDialog(
           .fillMaxWidth()
           .verticalScroll(rememberScrollState())
       ) {
-        // Top Browser Header & Close
+        // Browser Window Controls (Monochrome iOS style)
         Row(
           modifier = Modifier.fillMaxWidth(),
           horizontalArrangement = Arrangement.SpaceBetween,
@@ -109,58 +105,58 @@ fun CloudBrowserPreviewDialog(
           Row(verticalAlignment = Alignment.CenterVertically) {
             Box(
               modifier = Modifier
-                .size(10.dp)
+                .size(9.dp)
                 .clip(CircleShape)
-                .background(Color(0xFFFF5F56))
+                .background(White30)
             )
-            Spacer(modifier = Modifier.width(6.dp))
+            Spacer(modifier = Modifier.width(5.dp))
             Box(
               modifier = Modifier
-                .size(10.dp)
+                .size(9.dp)
                 .clip(CircleShape)
-                .background(Color(0xFFFFBD2E))
+                .background(White18)
             )
-            Spacer(modifier = Modifier.width(6.dp))
+            Spacer(modifier = Modifier.width(5.dp))
             Box(
               modifier = Modifier
-                .size(10.dp)
+                .size(9.dp)
                 .clip(CircleShape)
-                .background(Color(0xFF27C93F))
+                .background(White08)
             )
 
             Spacer(modifier = Modifier.width(12.dp))
 
             Text(
-              text = "1x Cloud Web Browser",
-              fontSize = 11.sp,
-              fontWeight = FontWeight.Bold,
+              text = "1x Cloud Web Viewer",
+              fontSize = 12.sp,
+              fontWeight = FontWeight.SemiBold,
               fontStyle = FontStyle.Italic,
-              color = TextSecondary
+              color = White75
             )
           }
 
           IconButton(
             onClick = onDismiss,
-            modifier = Modifier.size(32.dp)
+            modifier = Modifier.size(28.dp)
           ) {
             Icon(
               imageVector = Icons.Default.Close,
               contentDescription = "Close",
-              tint = TextSecondary,
-              modifier = Modifier.size(18.dp)
+              tint = IosGray1,
+              modifier = Modifier.size(16.dp)
             )
           }
         }
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        // Web Address Bar
+        // Web Address Bar (Monochrome)
         Box(
           modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
-            .background(Color(0x28060D1E))
-            .border(1.dp, GlassBorderSubtle, RoundedCornerShape(12.dp))
+            .background(Color(0x22000000))
+            .border(1.dp, White18, RoundedCornerShape(12.dp))
             .padding(horizontal = 10.dp, vertical = 7.dp)
         ) {
           Row(
@@ -168,15 +164,15 @@ fun CloudBrowserPreviewDialog(
           ) {
             Icon(
               imageVector = Icons.Default.Lock,
-              contentDescription = "HTTPS Secure",
-              tint = LiquidTeal,
-              modifier = Modifier.size(13.dp)
+              contentDescription = "Secure",
+              tint = PureWhite,
+              modifier = Modifier.size(12.dp)
             )
             Spacer(modifier = Modifier.width(6.dp))
             Text(
               text = file.cloudUrl,
               fontSize = 10.sp,
-              color = TextCyanGlow,
+              color = PureWhite,
               maxLines = 1,
               overflow = TextOverflow.Ellipsis,
               modifier = Modifier.weight(1f)
@@ -191,9 +187,9 @@ fun CloudBrowserPreviewDialog(
           modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(18.dp))
-            .background(Color(0x180D1933))
-            .border(1.dp, GlassBorderShine, RoundedCornerShape(18.dp))
-            .padding(16.dp),
+            .background(Color(0x12FFFFFF))
+            .border(1.dp, White18, RoundedCornerShape(18.dp))
+            .padding(18.dp),
           contentAlignment = Alignment.Center
         ) {
           Column(
@@ -207,39 +203,38 @@ fun CloudBrowserPreviewDialog(
               Icon(
                 imageVector = Icons.Default.Public,
                 contentDescription = null,
-                tint = LiquidCyan,
+                tint = PureWhite,
                 modifier = Modifier.size(16.dp)
               )
               Spacer(modifier = Modifier.width(6.dp))
               Text(
                 text = "1X STORAGE CLOUD",
                 fontSize = 13.sp,
-                fontWeight = FontWeight.Black,
+                fontWeight = FontWeight.Bold,
                 fontStyle = FontStyle.Italic,
                 letterSpacing = 1.sp,
-                color = LiquidCyan
+                color = PureWhite
               )
             }
 
             Text(
               text = "Shared via finex 50 GB Cloud Storage",
-              fontSize = 10.sp,
-              fontWeight = FontWeight.Medium,
-              fontStyle = FontStyle.Italic,
-              color = TextMuted,
+              fontSize = 11.sp,
+              fontWeight = FontWeight.Normal,
+              color = IosGray1,
               modifier = Modifier.padding(top = 2.dp)
             )
 
-            Spacer(modifier = Modifier.height(14.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
             // File Web Preview Frame
             if (file.category == FileCategory.IMAGE && hasLocalFile) {
               Box(
                 modifier = Modifier
-                  .size(160.dp)
+                  .size(150.dp)
                   .clip(RoundedCornerShape(14.dp))
                   .background(Color(0x33000000))
-                  .border(1.dp, Color(0x33FFFFFF), RoundedCornerShape(14.dp))
+                  .border(1.dp, White30, RoundedCornerShape(14.dp))
               ) {
                 AsyncImage(
                   model = ImageRequest.Builder(context)
@@ -254,57 +249,52 @@ fun CloudBrowserPreviewDialog(
             } else {
               Box(
                 modifier = Modifier
-                  .size(80.dp)
+                  .size(70.dp)
                   .clip(CircleShape)
-                  .background(Color(0x2200F2FE))
-                  .border(1.dp, Color(0x5500F2FE), CircleShape),
+                  .background(White12)
+                  .border(1.dp, White30, CircleShape),
                 contentAlignment = Alignment.Center
               ) {
                 Icon(
                   imageVector = Icons.Default.CloudDownload,
                   contentDescription = null,
-                  tint = LiquidCyan,
-                  modifier = Modifier.size(40.dp)
+                  tint = PureWhite,
+                  modifier = Modifier.size(34.dp)
                 )
               }
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(14.dp))
 
             Text(
               text = file.name,
               fontSize = 15.sp,
               fontWeight = FontWeight.Bold,
               fontStyle = FontStyle.Italic,
-              color = TextPrimary,
+              color = PureWhite,
               textAlign = TextAlign.Center,
               maxLines = 2
             )
 
             Text(
               text = "${file.formattedSize()} • Ready for Cloud Download",
-              fontSize = 11.sp,
-              fontWeight = FontWeight.Bold,
-              fontStyle = FontStyle.Italic,
-              color = LiquidTeal,
+              fontSize = 12.sp,
+              fontWeight = FontWeight.Normal,
+              color = White75,
               modifier = Modifier.padding(top = 4.dp)
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Web Download Simulation Button
+            // Solid White Download Button
             Box(
               modifier = Modifier
                 .fillMaxWidth()
                 .height(44.dp)
                 .clip(RoundedCornerShape(12.dp))
-                .background(
-                  brush = Brush.horizontalGradient(
-                    listOf(LiquidCyan, LiquidIceBlue)
-                  )
-                )
+                .background(PureWhite)
                 .clickable {
-                  Toast.makeText(context, "Direct download started from 1x Cloud!", Toast.LENGTH_SHORT).show()
+                  Toast.makeText(context, "Cloud download initiated via 1x Storage", Toast.LENGTH_SHORT).show()
                 },
               contentAlignment = Alignment.Center
             ) {
@@ -312,16 +302,16 @@ fun CloudBrowserPreviewDialog(
                 Icon(
                   imageVector = Icons.Default.CloudDownload,
                   contentDescription = null,
-                  tint = LiquidSpaceDark,
+                  tint = PureBlack,
                   modifier = Modifier.size(16.dp)
                 )
                 Spacer(modifier = Modifier.width(6.dp))
                 Text(
                   text = "DOWNLOAD FROM CLOUD",
                   fontSize = 12.sp,
-                  fontWeight = FontWeight.Black,
+                  fontWeight = FontWeight.Bold,
                   fontStyle = FontStyle.Italic,
-                  color = LiquidSpaceDark
+                  color = PureBlack
                 )
               }
             }
@@ -330,7 +320,7 @@ fun CloudBrowserPreviewDialog(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Actions: Copy Link & Open in System Browser
+        // Actions: Copy Link & Open in System Browser (Monochrome)
         Row(
           modifier = Modifier.fillMaxWidth(),
           horizontalArrangement = Arrangement.spacedBy(10.dp)
@@ -339,15 +329,15 @@ fun CloudBrowserPreviewDialog(
           Box(
             modifier = Modifier
               .weight(1f)
-              .height(44.dp)
+              .height(42.dp)
               .clip(RoundedCornerShape(12.dp))
-              .background(Color(0x22FFFFFF))
-              .border(1.dp, GlassBorderShine, RoundedCornerShape(12.dp))
+              .background(White12)
+              .border(1.dp, White30, RoundedCornerShape(12.dp))
               .clickable {
                 val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                 val clip = ClipData.newPlainText("1x Storage Cloud Link", file.cloudUrl)
                 clipboard.setPrimaryClip(clip)
-                Toast.makeText(context, "Cloud link copied to clipboard!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Link copied to clipboard", Toast.LENGTH_SHORT).show()
               }
               .testTag("copy_cloud_link_button"),
             contentAlignment = Alignment.Center
@@ -356,16 +346,15 @@ fun CloudBrowserPreviewDialog(
               Icon(
                 imageVector = Icons.Default.ContentCopy,
                 contentDescription = null,
-                tint = LiquidCyan,
-                modifier = Modifier.size(15.dp)
+                tint = PureWhite,
+                modifier = Modifier.size(14.dp)
               )
               Spacer(modifier = Modifier.width(6.dp))
               Text(
                 text = "Copy Link",
                 fontSize = 12.sp,
-                fontWeight = FontWeight.Bold,
-                fontStyle = FontStyle.Italic,
-                color = TextPrimary
+                fontWeight = FontWeight.SemiBold,
+                color = PureWhite
               )
             }
           }
@@ -374,10 +363,10 @@ fun CloudBrowserPreviewDialog(
           Box(
             modifier = Modifier
               .weight(1f)
-              .height(44.dp)
+              .height(42.dp)
               .clip(RoundedCornerShape(12.dp))
-              .background(Color(0x1800F2FE))
-              .border(1.dp, Color(0x4400F2FE), RoundedCornerShape(12.dp))
+              .background(White08)
+              .border(1.dp, White18, RoundedCornerShape(12.dp))
               .clickable {
                 try {
                   val intent = Intent(Intent.ACTION_VIEW, Uri.parse(file.cloudUrl))
@@ -393,16 +382,15 @@ fun CloudBrowserPreviewDialog(
               Icon(
                 imageVector = Icons.Default.OpenInBrowser,
                 contentDescription = null,
-                tint = LiquidCyan,
-                modifier = Modifier.size(16.dp)
+                tint = PureWhite,
+                modifier = Modifier.size(15.dp)
               )
               Spacer(modifier = Modifier.width(6.dp))
               Text(
                 text = "Open Browser",
                 fontSize = 12.sp,
-                fontWeight = FontWeight.Bold,
-                fontStyle = FontStyle.Italic,
-                color = LiquidCyan
+                fontWeight = FontWeight.SemiBold,
+                color = PureWhite
               )
             }
           }

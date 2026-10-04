@@ -6,9 +6,6 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -33,7 +30,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddPhotoAlternate
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Cloud
@@ -54,7 +50,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
@@ -71,18 +66,15 @@ import com.example.ui.components.CloudBrowserPreviewDialog
 import com.example.ui.components.FileItemCard
 import com.example.ui.components.FilePreviewDialog
 import com.example.ui.components.StorageHeroCard
-import com.example.ui.theme.GlassBorderCyan
-import com.example.ui.theme.GlassBorderShine
-import com.example.ui.theme.GlassBorderSubtle
-import com.example.ui.theme.GlassFillDeep
-import com.example.ui.theme.LiquidCyan
-import com.example.ui.theme.LiquidIceBlue
-import com.example.ui.theme.LiquidSpaceDark
-import com.example.ui.theme.LiquidViolet
-import com.example.ui.theme.TextCyanGlow
-import com.example.ui.theme.TextMuted
-import com.example.ui.theme.TextPrimary
-import com.example.ui.theme.TextSecondary
+import com.example.ui.theme.IosGray1
+import com.example.ui.theme.PureBlack
+import com.example.ui.theme.PureWhite
+import com.example.ui.theme.White04
+import com.example.ui.theme.White08
+import com.example.ui.theme.White12
+import com.example.ui.theme.White18
+import com.example.ui.theme.White30
+import com.example.ui.theme.White75
 import com.example.ui.theme.liquidBackgroundEffect
 import com.example.ui.theme.liquidGlass
 
@@ -148,7 +140,7 @@ fun HomeScreen(
     Column(
       modifier = Modifier.fillMaxSize()
     ) {
-      // Top Header
+      // Top Header (Monochrome iOS)
       Row(
         modifier = Modifier
           .fillMaxWidth()
@@ -160,17 +152,17 @@ fun HomeScreen(
           Row(verticalAlignment = Alignment.CenterVertically) {
             Box(
               modifier = Modifier
-                .size(30.dp)
+                .size(28.dp)
                 .clip(CircleShape)
-                .background(Color(0x3300F2FE))
-                .border(1.dp, Color(0x6600F2FE), CircleShape),
+                .background(White12)
+                .border(1.dp, White30, CircleShape),
               contentAlignment = Alignment.Center
             ) {
               Icon(
                 imageVector = Icons.Default.Cloud,
                 contentDescription = null,
-                tint = LiquidCyan,
-                modifier = Modifier.size(18.dp)
+                tint = PureWhite,
+                modifier = Modifier.size(16.dp)
               )
             }
 
@@ -178,22 +170,21 @@ fun HomeScreen(
 
             Text(
               text = "1X STORAGE",
-              fontSize = 20.sp,
-              fontWeight = FontWeight.Black,
+              fontSize = 19.sp,
+              fontWeight = FontWeight.Bold,
               fontStyle = FontStyle.Italic,
-              letterSpacing = 1.sp,
-              color = TextPrimary
+              letterSpacing = 0.5.sp,
+              color = PureWhite
             )
           }
 
           Text(
             text = "MADE BY FINEX",
             fontSize = 10.sp,
-            fontWeight = FontWeight.Black,
-            fontStyle = FontStyle.Italic,
-            letterSpacing = 2.sp,
-            color = LiquidCyan,
-            modifier = Modifier.padding(start = 38.dp)
+            fontWeight = FontWeight.SemiBold,
+            letterSpacing = 1.5.sp,
+            color = IosGray1,
+            modifier = Modifier.padding(start = 36.dp)
           )
         }
 
@@ -202,19 +193,19 @@ fun HomeScreen(
           verticalAlignment = Alignment.CenterVertically,
           modifier = Modifier
             .clip(RoundedCornerShape(20.dp))
-            .background(Color(0x18FFFFFF))
-            .border(1.dp, GlassBorderSubtle, RoundedCornerShape(20.dp))
+            .background(White08)
+            .border(1.dp, White18, RoundedCornerShape(20.dp))
             .padding(start = 10.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)
         ) {
           Text(
             text = user.displayName.take(14),
             fontSize = 11.sp,
-            fontWeight = FontWeight.Bold,
+            fontWeight = FontWeight.Medium,
             fontStyle = FontStyle.Italic,
-            color = TextSecondary
+            color = White75
           )
 
-          Spacer(modifier = Modifier.width(6.dp))
+          Spacer(modifier = Modifier.width(4.dp))
 
           IconButton(
             onClick = { viewModel.signOut() },
@@ -223,19 +214,19 @@ fun HomeScreen(
             Icon(
               imageVector = Icons.Default.Logout,
               contentDescription = "Sign out",
-              tint = TextMuted,
-              modifier = Modifier.size(16.dp)
+              tint = IosGray1,
+              modifier = Modifier.size(15.dp)
             )
           }
         }
       }
 
-      // Scrollable content area
+      // Scrollable Content
       LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 24.dp)
       ) {
-        // Hero Card showing 50 GB free storage
+        // Hero Card showing 50 GB free storage (Monochrome)
         item {
           StorageHeroCard(stats = stats)
           Spacer(modifier = Modifier.height(18.dp))
@@ -247,18 +238,13 @@ fun HomeScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(10.dp)
           ) {
-            // Main Upload Button
+            // Main Upload Button (Solid Pure White)
             Box(
               modifier = Modifier
                 .weight(1.3f)
-                .height(52.dp)
+                .height(50.dp)
                 .clip(RoundedCornerShape(16.dp))
-                .background(
-                  brush = Brush.horizontalGradient(
-                    colors = listOf(LiquidCyan, LiquidIceBlue)
-                  )
-                )
-                .border(1.dp, Color(0x66FFFFFF), RoundedCornerShape(16.dp))
+                .background(PureWhite)
                 .clickable(enabled = !isUploading) {
                   filePickerLauncher.launch("*/*")
                 }
@@ -268,17 +254,17 @@ fun HomeScreen(
               if (isUploading) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                   CircularProgressIndicator(
-                    color = LiquidSpaceDark,
+                    color = PureBlack,
                     strokeWidth = 2.dp,
                     modifier = Modifier.size(18.dp)
                   )
                   Spacer(modifier = Modifier.width(8.dp))
                   Text(
                     text = "UPLOADING...",
-                    fontWeight = FontWeight.Black,
+                    fontWeight = FontWeight.Bold,
                     fontStyle = FontStyle.Italic,
                     fontSize = 12.sp,
-                    color = LiquidSpaceDark
+                    color = PureBlack
                   )
                 }
               } else {
@@ -286,29 +272,29 @@ fun HomeScreen(
                   Icon(
                     imageVector = Icons.Default.CloudUpload,
                     contentDescription = null,
-                    tint = LiquidSpaceDark,
-                    modifier = Modifier.size(20.dp)
+                    tint = PureBlack,
+                    modifier = Modifier.size(18.dp)
                   )
                   Spacer(modifier = Modifier.width(8.dp))
                   Text(
                     text = "UPLOAD FILE",
-                    fontWeight = FontWeight.Black,
+                    fontWeight = FontWeight.Bold,
                     fontStyle = FontStyle.Italic,
-                    fontSize = 14.sp,
-                    color = LiquidSpaceDark
+                    fontSize = 13.sp,
+                    color = PureBlack
                   )
                 }
               }
             }
 
-            // Photos upload pill
+            // Media Upload Button (Frosted Glass)
             Box(
               modifier = Modifier
                 .weight(1f)
-                .height(52.dp)
+                .height(50.dp)
                 .clip(RoundedCornerShape(16.dp))
-                .background(Color(0x24FFFFFF))
-                .border(1.2.dp, GlassBorderShine, RoundedCornerShape(16.dp))
+                .background(White12)
+                .border(1.dp, White30, RoundedCornerShape(16.dp))
                 .clickable(enabled = !isUploading) {
                   photoPickerLauncher.launch(
                     PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo)
@@ -321,16 +307,16 @@ fun HomeScreen(
                 Icon(
                   imageVector = Icons.Default.AddPhotoAlternate,
                   contentDescription = null,
-                  tint = LiquidCyan,
-                  modifier = Modifier.size(18.dp)
+                  tint = PureWhite,
+                  modifier = Modifier.size(17.dp)
                 )
                 Spacer(modifier = Modifier.width(6.dp))
                 Text(
                   text = "MEDIA",
-                  fontWeight = FontWeight.ExtraBold,
+                  fontWeight = FontWeight.Bold,
                   fontStyle = FontStyle.Italic,
                   fontSize = 13.sp,
-                  color = TextPrimary
+                  color = PureWhite
                 )
               }
             }
@@ -339,7 +325,7 @@ fun HomeScreen(
           Spacer(modifier = Modifier.height(18.dp))
         }
 
-        // Search Bar
+        // Search Bar (Monochrome iOS)
         item {
           OutlinedTextField(
             value = searchQuery,
@@ -348,15 +334,15 @@ fun HomeScreen(
               Text(
                 text = "Search my files...",
                 fontStyle = FontStyle.Italic,
-                fontWeight = FontWeight.Bold,
-                color = TextMuted
+                fontWeight = FontWeight.Normal,
+                color = IosGray1
               )
             },
             leadingIcon = {
               Icon(
                 imageVector = Icons.Default.Search,
                 contentDescription = "Search",
-                tint = LiquidCyan
+                tint = PureWhite
               )
             },
             trailingIcon = {
@@ -365,20 +351,20 @@ fun HomeScreen(
                   Icon(
                     imageVector = Icons.Default.Clear,
                     contentDescription = "Clear",
-                    tint = TextSecondary
+                    tint = IosGray1
                   )
                 }
               }
             },
             singleLine = true,
-            shape = RoundedCornerShape(18.dp),
+            shape = RoundedCornerShape(16.dp),
             colors = OutlinedTextFieldDefaults.colors(
-              focusedBorderColor = LiquidCyan,
-              unfocusedBorderColor = GlassBorderSubtle,
-              focusedContainerColor = Color(0x18FFFFFF),
-              unfocusedContainerColor = Color(0x0EFFFFFF),
-              focusedTextColor = TextPrimary,
-              unfocusedTextColor = TextPrimary
+              focusedBorderColor = PureWhite,
+              unfocusedBorderColor = White18,
+              focusedContainerColor = White08,
+              unfocusedContainerColor = White04,
+              focusedTextColor = PureWhite,
+              unfocusedTextColor = PureWhite
             ),
             modifier = Modifier
               .fillMaxWidth()
@@ -388,7 +374,7 @@ fun HomeScreen(
           Spacer(modifier = Modifier.height(14.dp))
         }
 
-        // Category Filter Chips
+        // Category Filter Chips (Black and White Only)
         item {
           Row(
             modifier = Modifier
@@ -400,33 +386,30 @@ fun HomeScreen(
               val isSelected = category == selectedCategory
               Box(
                 modifier = Modifier
-                  .clip(RoundedCornerShape(14.dp))
-                  .background(
-                    if (isSelected) Brush.horizontalGradient(listOf(LiquidCyan.copy(alpha = 0.35f), LiquidViolet.copy(alpha = 0.25f)))
-                    else Brush.horizontalGradient(listOf(Color(0x14FFFFFF), Color(0x14FFFFFF)))
-                  )
+                  .clip(RoundedCornerShape(12.dp))
+                  .background(if (isSelected) PureWhite else White08)
                   .border(
                     width = 1.dp,
-                    color = if (isSelected) LiquidCyan else GlassBorderSubtle,
-                    shape = RoundedCornerShape(14.dp)
+                    color = if (isSelected) PureWhite else White18,
+                    shape = RoundedCornerShape(12.dp)
                   )
                   .clickable { viewModel.setCategory(category) }
-                  .padding(horizontal = 14.dp, vertical = 8.dp)
+                  .padding(horizontal = 14.dp, vertical = 7.dp)
                   .testTag("filter_chip_${category.name}"),
                 contentAlignment = Alignment.Center
               ) {
                 Text(
                   text = category.label,
-                  fontWeight = FontWeight.ExtraBold,
+                  fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
                   fontStyle = FontStyle.Italic,
                   fontSize = 12.sp,
-                  color = if (isSelected) TextPrimary else TextSecondary
+                  color = if (isSelected) PureBlack else White75
                 )
               }
             }
           }
 
-          Spacer(modifier = Modifier.height(20.dp))
+          Spacer(modifier = Modifier.height(18.dp))
         }
 
         // Section Title: MY FILES
@@ -439,37 +422,36 @@ fun HomeScreen(
             Row(verticalAlignment = Alignment.CenterVertically) {
               Text(
                 text = "MY FILES",
-                fontSize = 17.sp,
-                fontWeight = FontWeight.Black,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
                 fontStyle = FontStyle.Italic,
                 letterSpacing = 0.5.sp,
-                color = TextPrimary
+                color = PureWhite
               )
 
               Spacer(modifier = Modifier.width(8.dp))
 
               Box(
                 modifier = Modifier
-                  .clip(RoundedCornerShape(10.dp))
-                  .background(Color(0x2200F2FE))
+                  .clip(RoundedCornerShape(8.dp))
+                  .background(White12)
                   .padding(horizontal = 7.dp, vertical = 2.dp)
               ) {
                 Text(
                   text = "${files.size}",
                   fontSize = 11.sp,
-                  fontWeight = FontWeight.Black,
+                  fontWeight = FontWeight.Bold,
                   fontStyle = FontStyle.Italic,
-                  color = LiquidCyan
+                  color = PureWhite
                 )
               }
             }
 
             Text(
-              text = "Tap to preview • Share link",
+              text = "Tap to preview • Share",
               fontSize = 11.sp,
-              fontWeight = FontWeight.Bold,
-              fontStyle = FontStyle.Italic,
-              color = TextMuted
+              fontWeight = FontWeight.Normal,
+              color = IosGray1
             )
           }
 
@@ -483,11 +465,11 @@ fun HomeScreen(
               modifier = Modifier
                 .fillMaxWidth()
                 .liquidGlass(
-                  shape = RoundedCornerShape(22.dp),
-                  backgroundColor = GlassFillDeep,
-                  borderColor = GlassBorderSubtle
+                  shape = RoundedCornerShape(20.dp),
+                  backgroundColor = Color(0x10FFFFFF),
+                  borderColor = White18
                 )
-                .padding(32.dp),
+                .padding(30.dp),
               contentAlignment = Alignment.Center
             ) {
               Column(
@@ -496,27 +478,27 @@ fun HomeScreen(
                 Icon(
                   imageVector = Icons.Default.CloudQueue,
                   contentDescription = null,
-                  tint = TextMuted,
-                  modifier = Modifier.size(54.dp)
+                  tint = IosGray1,
+                  modifier = Modifier.size(48.dp)
                 )
 
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
                 Text(
                   text = if (searchQuery.isNotBlank()) "No files match \"$searchQuery\"" else "No files in ${selectedCategory.label}",
                   fontSize = 15.sp,
                   fontWeight = FontWeight.Bold,
                   fontStyle = FontStyle.Italic,
-                  color = TextPrimary,
+                  color = PureWhite,
                   textAlign = TextAlign.Center
                 )
 
-                Spacer(modifier = Modifier.height(6.dp))
+                Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
                   text = "Upload any document, image, or media file to store in your free 50 GB cloud.",
                   fontSize = 12.sp,
-                  color = TextSecondary,
+                  color = White75,
                   textAlign = TextAlign.Center
                 )
 
@@ -524,18 +506,18 @@ fun HomeScreen(
 
                 Box(
                   modifier = Modifier
-                    .clip(RoundedCornerShape(14.dp))
-                    .background(Color(0x1E00F2FE))
-                    .border(1.dp, Color(0x5500F2FE), RoundedCornerShape(14.dp))
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(White12)
+                    .border(1.dp, White30, RoundedCornerShape(12.dp))
                     .clickable { filePickerLauncher.launch("*/*") }
-                    .padding(horizontal = 16.dp, vertical = 10.dp)
+                    .padding(horizontal = 16.dp, vertical = 9.dp)
                 ) {
                   Text(
                     text = "+ Upload New File",
                     fontSize = 12.sp,
-                    fontWeight = FontWeight.Black,
+                    fontWeight = FontWeight.Bold,
                     fontStyle = FontStyle.Italic,
-                    color = LiquidCyan
+                    color = PureWhite
                   )
                 }
               }
@@ -554,7 +536,7 @@ fun HomeScreen(
       }
     }
 
-    // Modal File Preview Dialog
+    // Modal File Preview Dialog (Monochrome)
     previewFile?.let { file ->
       FilePreviewDialog(
         file = file,
@@ -568,7 +550,7 @@ fun HomeScreen(
       )
     }
 
-    // Modal Cloud Web Browser Preview Dialog
+    // Modal Cloud Web Browser Preview Dialog (Monochrome)
     browserCloudFile?.let { file ->
       CloudBrowserPreviewDialog(
         file = file,
