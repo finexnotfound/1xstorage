@@ -1,0 +1,6 @@
+{
+  "name": "1x Storage",
+  "description": "Free 50 GB cloud storage by finex with sleek liquid glass styling, fast uploads, previews, and instant cloud sharing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
